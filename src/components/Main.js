@@ -8,9 +8,9 @@ class Main extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path='/login' component={Signinform}/>
+                <Route exact path='/' component={Signinform}/>
                 <Route path='/signupform' component={Signupform}/>
-                <Route path='/' component={Dashboard}/>
+                <Route path='/dashboard' component={Dashboard}/>
             </Switch>
         )
     }

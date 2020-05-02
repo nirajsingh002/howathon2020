@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // react bootstrap components
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link, Redirect, Route } from 'react-router-dom';
+import { Link, Redirect, Route, Switch} from 'react-router-dom';
 
 // user created component
 import AccountSummary from './AccountSummary';
@@ -14,19 +14,23 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: true
+            loggedIn: true,
+            fullName: this.props.location.state.fullName,
+            userId: this.props.location.state.userId,
         }
 
-        // console.log('loc_state', this.props.location.state)
+        console.log('loc_state', this.props.location)
+        // console.log('path', path, 'url', url);
+        this.path = this.props.location.pathname;
     }
 
     signOut = () => {
         this.setState({ loggedIn : false })
     }
 
+
     render() {
-        const { loggedIn } = this.state;
-        const { fullName, userId } = {fullName: 'Jordan Walky', userId: 1}//this.props.location.state
+        const { loggedIn, fullName, userId } = this.state;
         return (
             
             loggedIn ? 
@@ -43,21 +47,26 @@ class Dashboard extends Component {
                     <Col sm={4}>
                         <ul>
                             <li>
-                                <Link to={`/accountsummary/${userId}`}>Account Summary</Link>
+                                <Link to={`${this.path}/accountsummary/${userId}`}>Account Summary</Link>
                             </li>
                             <li>
-                                <Link to={`/ministatement/${userId}`}>Mini Statement</Link>
+                                <Link to={`${this.path}/ministatement/${userId}`}>Mini Statement</Link>
                             </li>
                             <li>
-                                <Link to={`/fundtransfer/${userId}`}>Fund Transfer</Link>
+                                <Link to={`${this.path}/fundtransfer/${userId}`}>Fund Transfer</Link>
                             </li>
                         </ul>
                     </Col>
                     <Col sm={8}>
                     {/* Route components are rendered if the path prop matches the current URL */}
-                    <Route path="/accountsummary/:userId" component={AccountSummary} />
-                    <Route path="/ministatement/:userId" component={MiniStatement} />
-                    <Route path="/fundtransfer/:userId" component={FundTransfer} />
+                    <Switch>
+                        <Route exact path={`${this.path}`}>
+                            <h3>Please select a action.</h3>
+                        </Route>
+                        <Route path={`${this.path}/accountsummary/:userId`} component={AccountSummary} />
+                        <Route path={`${this.path}/ministatement/:userId`} component={MiniStatement} />
+                        <Route path={`${this.path}/fundtransfer/:userId`} component={FundTransfer} />
+                    </Switch>
                     </Col>
                 </Row>
             </>
