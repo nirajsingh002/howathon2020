@@ -1,0 +1,110 @@
+{
+    "users": [
+        {
+            "fullName": "Jordan Walky",
+            "loginId": "jordan",
+            "password": "jordan",
+            "userId": "1"
+        },
+        {
+            "fullName": "Ravi khandelwal",
+            "loginId": "ravi.khandelwal",
+            "password": "ravi.khandelwal",
+            "userId": "2"
+        }
+    ],
+    "accounts": [
+        {
+            "id": 1,
+            "userId": 1,
+            "availableBalance": "50000"
+        },
+        {
+            "id": 2,
+            "userId": 2,
+            "availableBalance": "10000"
+        }
+    ],
+    "history": [
+        {
+            "type": "Debit",
+            "amount": "100",
+            "availableBalance": "200",
+            "id": 1,
+            "userId": 1
+        },
+        {
+            "type": "Credit",
+            "amount": "100",
+            "availableBalance": "300",
+            "id": 2,
+            "userId": 1
+        },
+        {
+            "type": "Debit",
+            "amount": "100",
+            "availableBalance": "200",
+            "id": 3,
+            "userId": 2
+        },
+        {
+            "type": "Credit",
+            "amount": "100",
+            "availableBalance": "300",
+            "id": 3,
+            "userId": 2
+        }
+    ],
+    "deposits": [
+        {
+            "type": "Fixed",
+            "term": "5 years",
+            "amount": "50000",
+            "userId": 1,
+            "id": 1
+        },
+        {
+            "type": "Recurring",
+            "term": "3 years",
+            "amount": "10000",
+            "userId": 1,
+            "id": 2
+        },
+        {
+            "type": "Fixed",
+            "term": "5 years",
+            "amount": "50000",
+            "userId": 2,
+            "id": 3
+        },
+        {
+            "type": "Recurring",
+            "term": "3 years",
+            "amount": "10000",
+            "userId": 2,
+            "id": 4
+        }
+    ],
+    "beneficiaries": [
+        {
+            "id": 1,
+            "userId": 1,
+            "fullName": "Beneficiary 1"
+        },
+        {
+            "id": 2,
+            "userId": 1,
+            "fullName": "Beneficiary 2"
+        },
+        {
+            "id": 3,
+            "userId": 2,
+            "fullName": "Beneficiary 1"
+        },
+        {
+            "id": 4,
+            "userId": 2,
+            "fullName": "Beneficiary 2"
+        }
+    ]
+}
