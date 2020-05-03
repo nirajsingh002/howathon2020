@@ -9,6 +9,7 @@ import { Link, Redirect } from "react-router-dom";
 // user created components
 import Dashboard from './Dashboard';
 import Error from './Error';
+import voice from '../service/voice';
 
 class Signinform extends Component {
     constructor(props) {
@@ -55,6 +56,24 @@ class Signinform extends Component {
         e.preventDefault();
     }
 
+    enableVoice = () => {
+        console.log('enableVoice', voice)
+        // Listen for the event.
+        document.getElementsByTagName('body')[0].addEventListener('login', (e) => { 
+            console.log('test', e.detail) 
+            this.setState({
+                username: e.detail.username.toLowerCase(),
+                password: e.detail.pin.toLowerCase(),
+            }, 
+            () => { 
+                console.log('update state', this.state)
+                this.handleSubmit(e);
+                }
+            )
+    }, false);
+        
+        
+    }
 
     render() {
         const { isAuthenticated, wrongCredential, userDetails } = this.state;
@@ -66,6 +85,7 @@ class Signinform extends Component {
                                         }} /> 
             : 
                 <>
+                    <button onClick={this.enableVoice}>Enable Voice</button>
                     <h1>
                         Sign In
                     </h1>
