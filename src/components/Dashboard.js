@@ -15,8 +15,9 @@ class Dashboard extends Component {
         super(props);
         this.state = {
             loggedIn: true,
-            fullName: this.props.location.state.fullName,
-            userId: this.props.location.state.userId,
+            fullName: this.props.location.state.fullName, //'Jordan Walky', 
+            userId: this.props.location.state.userId, //'1',
+            voiceEnable: false
         }
 
         console.log('loc_state', this.props.location)
@@ -28,7 +29,16 @@ class Dashboard extends Component {
         this.setState({ loggedIn : false })
     }
 
-
+    componentDidMount() {
+        document.getElementsByTagName('body')[0].addEventListener('dashboard', (e) => { 
+            console.log('dashboard', e.detail);
+            const links = Object.keys(e.detail);
+            console.log('links', links);
+            this.setState({ loggedIn: (links.length && !links.includes('signout')) })
+            const LinkElem = document.querySelector('[href*="'+links+'"]')
+            LinkElem && LinkElem.click();
+        })
+    }
     render() {
         const { loggedIn, fullName, userId } = this.state;
         return (

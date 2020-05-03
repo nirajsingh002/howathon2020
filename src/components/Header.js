@@ -8,7 +8,12 @@ import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 
+import { voiceStart } from '../service/voice';
+
 class Header extends Component {
+    enableVoice = () => {
+        voiceStart();
+    }
     render() {
         return (
             <Navbar bg="light" expand="lg">
@@ -26,10 +31,7 @@ class Header extends Component {
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
                     </Nav>
-                    <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
-                    </Form>
+                    <button onClick={this.enableVoice}>Enable Voice</button>
                 </Navbar.Collapse>
             </Navbar>
         )
