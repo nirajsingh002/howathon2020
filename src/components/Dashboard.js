@@ -31,12 +31,13 @@ class Dashboard extends Component {
 
     componentDidMount() {
         document.getElementsByTagName('body')[0].addEventListener('dashboard', (e) => { 
-            console.log('dashboard', e.detail);
             const links = Object.keys(e.detail);
-            console.log('links', links);
             this.setState({ loggedIn: (links.length && links.includes('signout')) ? false : true })
             const LinkElem = document.querySelector('[href*="'+links+'"]')
             LinkElem && LinkElem.click();
+            let customEvent = new CustomEvent('dashboard_response');
+            // Dispatch the event.
+            document.getElementsByTagName('body')[0].dispatchEvent(customEvent);
         })
     }
     render() {

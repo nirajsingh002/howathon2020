@@ -15,7 +15,7 @@ const speechRecognitionObject = () => {
 }
 
 
-let flow, currentFlowData, isDeafultRequired = true, loginFailed = true, setUserFlow = false;
+let flow = '', currentFlowData, isDeafultRequired = true, loginFailed = true, setUserFlow = false;
   let reactDataObj = {};
   const data = {
     "login":  {
@@ -31,7 +31,7 @@ let flow, currentFlowData, isDeafultRequired = true, loginFailed = true, setUser
         }
     },
     'dashboard': {
-      "response": "What would you like to show?",
+      "response": "What would you like to do now?",
       "getData": ['accountsummary', 'ministatement', 'fundtransfer', 'signout']
 
     },
@@ -76,17 +76,6 @@ const parseCommand = (transcriptArr) => {
       // Dispatch the event.
       document.getElementsByTagName('body')[0].dispatchEvent(loginEvent);
       flow = '';
-      /* if (loginFailed) {
-        setTimeout(() => {
-          readOutLoud(currentFlowData.nextSteps["faliure"]);
-        }, 2000);
-        loginFailed = false;
-      } else {
-        setTimeout(() => {
-          readOutLoud(currentFlowData.nextSteps["success"]);
-          setUserFlow = true;
-        }, 2000);
-      } */
     }
     return;
   } else if (flow === "dashboard") {
@@ -94,9 +83,6 @@ const parseCommand = (transcriptArr) => {
     transcriptArr.forEach((word,i) => {
       if (word === "") {
         return;
-      }
-      if (setUserFlow) {
-        settingUserFlow(transcriptArr);
       }
       currentFlowData.getData.map(key => {
         const found = key.match(new RegExp(word, 'gi'));
@@ -108,11 +94,9 @@ const parseCommand = (transcriptArr) => {
     });
     console.log('reactDataObj dashboard', reactDataObj);
     var dashboardEvent = new CustomEvent('dashboard', {detail: reactDataObj});
-      // Dispatch the event.
-      document.getElementsByTagName('body')[0].dispatchEvent(dashboardEvent);
-      flow = '';
-    // settingUserFlow(transcriptArr);
-  } else {
+    // Dispatch the event.
+    document.getElementsByTagName('body')[0].dispatchEvent(dashboardEvent);
+  } else if(flow === "") {
     settingUserFlow(transcriptArr);
   }
   if (isDeafultRequired) {
@@ -166,7 +150,6 @@ export const voiceStart = () => {
   
   // This block is called every time the Speech APi captures a line. 
   recognition.onresult = function(event) {
-    console.log('test 2');
   
     // event is a SpeechRecognitionEvent object.
     // It holds all the lines we have captured so far. 
@@ -205,7 +188,19 @@ export const voiceStart = () => {
   /*-----------------------------
         App buttons and input 
   ------------------------------*/
-  
-  console.log('triggered enable voice')
+
+  document.getElementsByTagName('body')[0].addEventListener('login_status', (e) => { 
+    if (e.detail.length) {
+      readOutLoud(currentFlowData.nextSteps["success"].replace("#name", e.detail[0].fullName));
+      flow = 'dashboard';
+      currentFlowData = data["dashboard"];
+    } else {
+      readOutLoud(currentFlowData.nextSteps["faliure"]);
+    }
+  }, false);
+
+  document.getElementsByTagName('body')[0].addEventListener('dashboard_response', (e) => { 
+      readOutLoud(currentFlowData.response);
+  }, false);
   recognition.start();
 }

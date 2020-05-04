@@ -48,6 +48,9 @@ class Signinform extends Component {
                             wrongCredential: !Boolean(response.data.length),
                         })
                     }
+                    let customEvent = new CustomEvent('login_status', {detail: response.data});
+                    // Dispatch the event.
+                    document.getElementsByTagName('body')[0].dispatchEvent(customEvent);
                 })
                 .catch(function (error) {
                     // handle error
