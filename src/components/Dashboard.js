@@ -34,7 +34,7 @@ class Dashboard extends Component {
             console.log('dashboard', e.detail);
             const links = Object.keys(e.detail);
             console.log('links', links);
-            this.setState({ loggedIn: (links.length && !links.includes('signout')) })
+            this.setState({ loggedIn: (links.length && links.includes('signout')) ? false : true })
             const LinkElem = document.querySelector('[href*="'+links+'"]')
             LinkElem && LinkElem.click();
         })
@@ -49,7 +49,7 @@ class Dashboard extends Component {
                     <Col sm={6}>
                         <h1>{fullName}</h1>
                     </Col>
-                    <Col sm={6}>
+                    <Col sm={{ span: 2, offset: 4 }} style={{textAlign: 'right'}}>
                         <button className="Signout" onClick={this.signOut} style={{marginTop: '15px'}} >Sign Out</button>
                     </Col>
                 </Row>
